@@ -9,9 +9,12 @@ public class BinTimeseries {
 	private String binnedData;
 
 	public BinTimeseries(DBConnection conn, String toBin, String saveas) {
-		//binnedData = saveas;
-		binnedData = "hashtags_by_hour";
-		String query = "SELECT DISTINCT\n"
+		binnedData = saveas;
+		
+		String query = "DROP TABLE " + binnedData + ";";
+		conn.executeQueryWithoutResult(query);
+		
+		query = "SELECT DISTINCT\n"
 						+ "date_trunc(\'hour\', \"timestamp\") AS \"hour\",\n"
 						+ "hashtag,\n" 
 						+ "count(hashtag) OVER (PARTITION BY hashtag, date_trunc(\'hour\', \"timestamp\")) AS \"cnt\"\n"

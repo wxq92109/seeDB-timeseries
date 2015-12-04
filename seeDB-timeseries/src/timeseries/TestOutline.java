@@ -14,16 +14,24 @@ public class TestOutline {
 		seedb.connectToDatabase(s.database, s.databaseType, s.username, s.password);
 		System.out.println("connected to db");
 		
-		seedb.binTimeData("hashtags", "binned_hashtags");
+		long timeBefore = System.currentTimeMillis();
+		
+		seedb.binTimeData("hashtags", "hashtags_by_hour");
 		System.out.println("binned data");
 		
 		String target = "job";
 		String[] candidates = {"jobs", "kca", "tweetmyjobs", "vote1duk"};
-		seedb.computeCorrelation(target, candidates);
+		//seedb.computeCorrelation(target, candidates);
+		seedb.computeCorrelation(target);
 		System.out.println("computed cross correlation");
 		
-		LinkedHashMap<String, HashMap<Timestamp, Double>> results = (LinkedHashMap<String, HashMap<Timestamp, Double>>) seedb.getHighlyCorrelated(1);
-		System.out.println(results);
+		LinkedHashMap<String, HashMap<Timestamp, Double>> results = (LinkedHashMap<String, HashMap<Timestamp, Double>>) seedb.getHighlyCorrelated(5);
+		results.forEach((k, v) -> System.out.println(k + "=" + v));
+		//System.out.println(results);
+		
+		long timeAfter = System.currentTimeMillis();
+		long elapsed = timeAfter - timeBefore;
+		System.out.println(elapsed);
 		
 		//seedb.initialize(query, null, settings);
 		//result = seedb.computeDifferenceWrapper();

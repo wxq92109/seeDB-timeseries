@@ -90,6 +90,10 @@ public class SeeDB {
 		cc = new CrossCorrelation(connection, target, candidates, bt.getBinnedDataName());
 	}
 	
+	public void computeCorrelation(String target) {
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+	}
+	
 	public HashMap<String, HashMap<Timestamp, Double>> getHighlyCorrelated(int n) {
 		return cc.getHighlyCorrelated(n);	
 	}
