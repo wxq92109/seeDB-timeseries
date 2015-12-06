@@ -33,6 +33,32 @@ public class BinTimeseries {
 
 	}
 	
+	public BinTimeseries(DBConnection conn, String toBin, String saveas, Timestamp startTime, Timestamp endTime) {
+		binnedData = saveas;
+		
+		String query = "DROP TABLE IF EXISTS " + binnedData + ";";
+		conn.executeQueryWithoutResult(query);
+		
+		query = "SELECT DISTINCT\n"
+						+ "date_trunc(\'hour\', \"timestamp\") AS \"hour\",\n"
+						+ "hashtag,\n" 
+						+ "count(hashtag) OVER (PARTITION BY hashtag, date_trunc(\'hour\', \"timestamp\")) AS \"cnt\"\n"
+						+ "INTO hashtags_by_hour\n"
+						+ "FROM hashtags\n"
+						+ "WHERE timestamp >= \'" + startTime.toString() + "\' AND timestamp <= \'" + endTime.toString() + "\'\n" 
+						+ "ORDER BY hashtag, hour, cnt DESC;";
+		/*query = "SELECT DISTINCT\n"
+				+ "date_trunc(\'min\', \"timestamp\") AS \"min\",\n"
+				+ "hashtag,\n" 
+				+ "count(hashtag) OVER (PARTITION BY hashtag, date_trunc(\'min\', \"timestamp\")) AS \"cnt\"\n"
+				+ "INTO hashtags_by_min\n"
+				+ "FROM hashtags\n"
+				+ "ORDER BY hashtag, min;";*/
+		
+		conn.executeQueryWithoutResult(query);
+		
+	}
+	
 	public String getBinnedDataName() {
 		return binnedData;
 	}

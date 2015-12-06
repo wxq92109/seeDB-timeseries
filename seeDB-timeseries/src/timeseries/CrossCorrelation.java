@@ -70,7 +70,7 @@ public class CrossCorrelation {
 		
 		// collect target data
 		query = "SELECT * FROM " + binnedData + " WHERE hashtag = \'" + target + "\' "
-				+ "AND hour < \'" + endTime.toString() + "\' AND hour > \'" + startTime.toString() + "\';";
+				+ "AND hour <= \'" + endTime.toString() + "\' AND hour >= \'" + startTime.toString() + "\';";
 		System.out.println(query);
 		rs = conn.executeQuery(query);
 		try {

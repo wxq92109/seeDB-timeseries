@@ -84,6 +84,10 @@ public class SeeDB {
 		bt = new BinTimeseries(connection, toBin, saveas);
 	}
 	
+	public void binTimeData(String toBin, String saveas, Timestamp startTime, Timestamp endTime) {
+		bt = new BinTimeseries(connection, toBin, saveas, startTime, endTime);
+	}
+	
 	/**
 	 * Compute cross correlation coefficients between hashtag and candidate,
 	 * and return top n candidate hashtags with highest correlation.
