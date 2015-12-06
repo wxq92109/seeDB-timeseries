@@ -11,7 +11,7 @@ public class BinTimeseries {
 	public BinTimeseries(DBConnection conn, String toBin, String saveas) {
 		binnedData = saveas;
 		
-		String query = "DROP TABLE " + binnedData + ";";
+		String query = "DROP TABLE IF EXISTS " + binnedData + ";";
 		conn.executeQueryWithoutResult(query);
 		
 		query = "SELECT DISTINCT\n"
@@ -21,17 +21,15 @@ public class BinTimeseries {
 						+ "INTO hashtags_by_hour\n"
 						+ "FROM hashtags\n"
 						+ "ORDER BY hashtag, hour, cnt DESC;";
+		/*query = "SELECT DISTINCT\n"
+				+ "date_trunc(\'min\', \"timestamp\") AS \"min\",\n"
+				+ "hashtag,\n" 
+				+ "count(hashtag) OVER (PARTITION BY hashtag, date_trunc(\'min\', \"timestamp\")) AS \"cnt\"\n"
+				+ "INTO hashtags_by_min\n"
+				+ "FROM hashtags\n"
+				+ "ORDER BY hashtag, min;";*/
 		
 		conn.executeQueryWithoutResult(query);
-		
-		/*ResultSet rs = conn.executeQuery(query);
-		while (rs.next()) {
-			//Timestamp t = rs.getTimestamp(3);
-			//String hashtag = rs.getString(2);
-			//int id = rs.getInt(1);
-			int id = rs.getInt(1);
-		}
-		rs.close();*/
 
 	}
 	

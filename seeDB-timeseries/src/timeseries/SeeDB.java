@@ -70,6 +70,10 @@ public class SeeDB {
 		
 	}
 	
+	//public ArrayList<String> getDistinctHashTags() {
+	//	
+	//}
+	
 	/**
 	 * Create binned format of data and save as a table in the database. 
 	 * Save # of occurrences of hashtags over 1 hour granularity of time
@@ -87,11 +91,17 @@ public class SeeDB {
 	 * @param candidates candidate hashtags
 	 */
 	public void computeCorrelation(String target, String[] candidates) {
-		cc = new CrossCorrelation(connection, target, candidates, bt.getBinnedDataName());
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
 	}
 	
 	public void computeCorrelation(String target) {
 		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+	}
+	
+	public void computeCorrelationTimeWindow (String target, Timestamp startTime, Timestamp endTime) {
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeCrossCorrelationTimeWindow(target, startTime, endTime, bt.getBinnedDataName());
+			
 	}
 	
 	public HashMap<String, HashMap<Timestamp, Double>> getHighlyCorrelated(int n) {
