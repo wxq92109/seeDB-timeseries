@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -39,16 +40,15 @@ public static void main(String[] args) throws Exception {
 		seedb.binTimeData("hashtags", "hashtags_by_hour", Timestamp.valueOf("2015-02-24 00:00:00.0"), Timestamp.valueOf("2015-02-24 05:00:00.0"));
 		String target = "job";
 		String[] candidates = {"jobs", "kca", "tweetmyjobs", "vote1duk"};
-		//seedb.computeCorrelation(target, candidates);
-		//seedb.computeCorrelation(target);
-		seedb.computeCorrelationTimeWindow (target, Timestamp.valueOf("2015-02-24 00:00:00.0"), Timestamp.valueOf("2015-02-24 05:00:00.0")) ;
-		System.out.println("computed cross correlation");
-		
-//		LinkedHashMap<String, HashMap<Timestamp, Double>> results = (LinkedHashMap<String, HashMap<Timestamp, Double>>) seedb.getHighlyCorrelated(5);
-//		results.forEach((k, v) -> System.out.println(k + "=" + v));
-//		System.out.println(results);
-		
-      String response = "Use /get to download a PDF";
+		seedb.computeCorrelation(target, candidates);
+		LinkedHashMap<String, HashMap<Timestamp, Double>> results = (LinkedHashMap<String, HashMap<Timestamp, Double>>) seedb.getHighlyCorrelated(5);
+
+		results.forEach((k, v) -> System.out.println(k + "=" + v));
+		String response = "Response: ";
+		for (Entry<String, HashMap<Timestamp, Double>> result : results.entrySet()) {
+			response += result.getKey() + "=" + result.getValue();
+		}
+//      String response = "Use /get to download a PDF";
       t.sendResponseHeaders(200, response.length());
       OutputStream os = t.getResponseBody();
       os.write(response.getBytes());

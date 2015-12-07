@@ -96,6 +96,7 @@ public class SeeDB {
 	 */
 	public void computeCorrelation(String target, String[] candidates) {
 		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeCrossCorrelation(target, candidates, bt.getBinnedDataName());
 	}
 	
 	public void computeCorrelation(String target) {
