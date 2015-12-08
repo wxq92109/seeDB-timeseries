@@ -52,10 +52,10 @@ public class Server {
 		LinkedHashMap<String, HashMap<Timestamp, Double>> results = (LinkedHashMap<String, HashMap<Timestamp, Double>>) seedb.getHighlyCorrelated(5);
 
 		results.forEach((k, v) -> System.out.println(k + "=" + v));
-		String response = "Response: ";
-		for (Entry<String, HashMap<Timestamp, Double>> result : results.entrySet()) {
-			response += result.getKey() + "=" + result.getValue();
-		}
+//		String response = "Response: ";
+//		for (Entry<String, HashMap<Timestamp, Double>> result : results.entrySet()) {
+//			response += result.getKey() + "=" + result.getValue();
+//		}
 		System.out.println(t.getResponseHeaders());
 	    Headers h = t.getResponseHeaders();
 	    // these are the user inputs
@@ -64,14 +64,14 @@ public class Server {
 	    h.add("Content-Type", "application/json");
 		Gson gson = new Gson(); 
 		String json = gson.toJson(results); 
-		System.out.println(json);
+		System.out.println("json" + json);
 		t.sendResponseHeaders(200, json.length());
 		OutputStream os = t.getResponseBody();
 		os.write(json.getBytes());
 		os.close();
     }
     
-    
+    // this function is from: http://www.rgagnon.com/javadetails/java-get-url-parameters-using-jdk-http-server.html
 	  public static Map<String, String> queryToMap(String query){
 		    Map<String, String> result = new HashMap<String, String>();
 		    for (String param : query.split("&")) {

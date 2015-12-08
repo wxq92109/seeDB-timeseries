@@ -29,7 +29,6 @@ router.post('/getRecommendations', function(req, res) {
             console.log(error);
         } else {
             console.log('outcome of request');
-            console.log(response.statusCode, body);
             res.send(JSON.stringify(body));   
 
         }
