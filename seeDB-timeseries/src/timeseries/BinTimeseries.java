@@ -19,15 +19,15 @@ public class BinTimeseries {
 						+ "hashtag,\n" 
 						+ "count(hashtag) OVER (PARTITION BY hashtag, date_trunc(\'hour\', \"timestamp\")) AS \"cnt\"\n"
 						+ "INTO hashtags_by_hour\n"
-						+ "FROM hashtags\n"
-						+ "ORDER BY hashtag, hour, cnt DESC;";
+						+ "FROM hashtags\n";
+						//+ "ORDER BY hashtag, hour, cnt DESC;";
 		/*query = "SELECT DISTINCT\n"
 				+ "date_trunc(\'min\', \"timestamp\") AS \"min\",\n"
 				+ "hashtag,\n" 
 				+ "count(hashtag) OVER (PARTITION BY hashtag, date_trunc(\'min\', \"timestamp\")) AS \"cnt\"\n"
 				+ "INTO hashtags_by_min\n"
-				+ "FROM hashtags\n"
-				+ "ORDER BY hashtag, min;";*/
+				+ "FROM hashtags\n";
+				//+ "ORDER BY hashtag, min;";*/
 		
 		conn.executeQueryWithoutResult(query);
 

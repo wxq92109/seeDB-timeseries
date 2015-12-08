@@ -121,17 +121,22 @@ public class SeeDB {
 			
 	}
 	
+	public void computeEuclideanDistance (String target, String[] candidates) {
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeEuclideanDistance(target, candidates, bt.getBinnedDataName());
+	}
+	
 	public HashMap<String, HashMap<Timestamp, Double>> getHighlyCorrelated(int n) {
 		return cc.getHighlyCorrelated(n);	
 	}
 	
-	public String[] getPopularHashtags() {
-		HashtagsMetadata hm = new HashtagsMetadata(connection, 5);
+	public String[] getPopularHashtags(int n) {
+		HashtagsMetadata hm = new HashtagsMetadata(connection, n);
 		return hm.getPopular();
 	}
 	
 	public String[] getAllHashtags() {
-		HashtagsMetadata hm = new HashtagsMetadata(connection, 10);
+		HashtagsMetadata hm = new HashtagsMetadata(connection, 0);
 		return hm.getAll();
 	}
 }

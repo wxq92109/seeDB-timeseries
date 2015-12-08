@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
@@ -470,6 +471,102 @@ public class CrossCorrelation {
 		
 	}
 	
+	public void computeEuclideanDistance (String target, String[] candidates, String binnedData) {
+		this.target = target;
+		this.candidates = candidates;
+		this.targetData = new HashMap<Timestamp, Double> ();
+		this.candData = new HashMap<String, HashMap<Timestamp, Double>> ();
+		this.candCorrelation = new LinkedHashMap<String, Double> ();
+		
+		/*for (int i = 0; i < 24; i ++) {
+			for (int j = 0; j < 60; j++) {
+				String hour = "" + i;
+				if (i < 10) hour = "0" + hour;
+				String min = "" + j;
+				if (j < 10) min = "0" + min;
+				this.targetData.put(Timestamp.valueOf("2015-02-24 " + hour + ":" + min + ":00.0"), 0.0);
+			}
+		}*/
+		
+		//binned by hour
+		for (int i = 0; i < 24; i ++) {
+			//for (int i = 8; i < 24; i ++) {
+				String hour = "" + i;
+				if (i < 10) hour = "0" + hour;
+				this.targetData.put(Timestamp.valueOf("2015-02-24 " + hour + ":00:00.0"), 0.0);
+		}
+	
+		
+		String query = "SELECT * FROM " + binnedData + " WHERE hashtag = \'" + target + "\';";
+		ResultSet rs = conn.executeQuery(query);
+		try {
+			while (rs.next()) {
+				Timestamp t = rs.getTimestamp(1);
+				//String hashtag = rs.getString(2);
+				double count = (double) rs.getInt(3);
+				targetData.put(t, count);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		//targetDataArray = targetData.values().toArray(targetDataArray);
+		targetDataArray = targetData.values().stream().mapToDouble(i->i).toArray();
+		
+		//System.out.println(target + Arrays.toString(targetDataArray));
+				
+		for (String candidate: candidates) {
+			String query2 =  "SELECT * FROM " + binnedData + " where hashtag = \'" + candidate + "\';";
+			rs = conn.executeQuery(query2);
+			HashMap<Timestamp, Double> temp = new HashMap<Timestamp, Double> ();
+			
+			/*for (int i = 0; i < 24; i ++) {
+				for (int j = 0; j < 60; j++) {
+					String hour = "" + i;
+					if (i < 10) hour = "0" + hour;
+					String min = "" + j;
+					if (j < 10) min = "0" + min;
+					temp.put(Timestamp.valueOf("2015-02-24 " + hour + ":" + min + ":00.0"), 0.0);
+				}
+			}*/
+			
+			// binned by hour
+			for (int i = 0; i < 24; i ++) {
+				//for (int i = 8; i < 24; i ++) {
+					String hour = "" + i;
+					if (i < 10) hour = "0" + hour;
+					temp.put(Timestamp.valueOf("2015-02-24 " + hour + ":00:00.0"), 0.0);
+			}
+			try {
+				while (rs.next()) {
+					Timestamp t = rs.getTimestamp(1);
+					double count = (double) rs.getInt(3);
+					temp.put(t, count);
+				}
+				candData.put(candidate, temp);
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			//candDataArray = targetData.values().toArray(candDataArray);
+			candDataArray = candData.get(candidate).values().stream().mapToDouble(i->i).toArray();
+			
+			//System.out.println(candidate + Arrays.toString(candDataArray));
+			
+			double coeff = new EuclideanDistance().compute(targetDataArray, candDataArray);
+			candCorrelation.put(candidate, coeff);
+			
+		}
+				
+		candCorrelation = 
+			     candCorrelation.entrySet().stream()
+			    .sorted(Entry.comparingByValue())
+			    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+			                              (e1, e2) -> e1, LinkedHashMap::new));
+		System.out.println(candCorrelation.toString());
+		
+	}
+
 	public HashMap<String, HashMap<Timestamp, Double>> getHighlyCorrelated (int n) {
 		LinkedHashMap<String, HashMap<Timestamp, Double>>  topCandidateData = new LinkedHashMap<String, HashMap<Timestamp, Double>> ();
 		topCandidateData.put(this.target, this.targetData); 
