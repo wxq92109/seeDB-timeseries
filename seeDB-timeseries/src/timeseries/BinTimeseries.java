@@ -43,7 +43,7 @@ public class BinTimeseries {
 						+ "date_trunc(\'hour\', \"timestamp\") AS \"hour\",\n"
 						+ "hashtag,\n" 
 						+ "count(hashtag) OVER (PARTITION BY hashtag, date_trunc(\'hour\', \"timestamp\")) AS \"cnt\"\n"
-						+ "INTO hashtags_by_hour\n"
+						+ "INTO hashtags_by_hour_window\n"
 						+ "FROM hashtags\n"
 						+ "WHERE timestamp >= \'" + startTime.toString() + "\' AND timestamp <= \'" + endTime.toString() + "\'\n" 
 						+ "ORDER BY hashtag, hour, cnt DESC;";

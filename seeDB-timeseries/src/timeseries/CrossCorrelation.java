@@ -135,6 +135,85 @@ public class CrossCorrelation {
 		//System.out.println(candCorrelation.toString());
 	}
 	
+	public void computeCrossCorrelationTimeWindow (String target, String[] candidates, Timestamp startTime, Timestamp endTime, String binnedData) {
+		this.target = target;
+		this.targetData = new HashMap<Timestamp, Double> ();
+		this.candData = new HashMap<String, HashMap<Timestamp, Double>> ();
+		this.candCorrelation = new LinkedHashMap<String, Double> ();
+		
+		ArrayList<Timestamp> timestamps = new ArrayList<Timestamp> ();
+		
+		String query = "SELECT * FROM generate_series(\'" + startTime.toString() + "\'::timestamp, \'" + endTime.toString() 
+				+ "\', \'1 hour\');";
+		ResultSet rs = conn.executeQuery(query);
+		try {
+			while (rs.next()) {
+				Timestamp t = rs.getTimestamp(1);
+				this.targetData.put(t, 0.0);
+				timestamps.add(t);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// collect target data
+		query = "SELECT * FROM " + binnedData + " WHERE hashtag = \'" + target + "\';";
+		rs = conn.executeQuery(query);
+		try {
+			while (rs.next()) {
+				Timestamp t = rs.getTimestamp(1);
+				//String hashtag = rs.getString(2);
+				double count = (double) rs.getInt(3);
+				targetData.put(t, count);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		targetDataArray = targetData.values().stream().mapToDouble(i->i).toArray();
+		
+		// collect candidate data
+		// query all distinct hashtags (not just appearing within the time window)
+		
+		for (String candidate: candidates) {
+			try {	
+					String query2 =  "SELECT * FROM " + binnedData + " where hashtag = \'" + candidate + "\';";
+					ResultSet rs2 = conn.executeQuery(query2);
+					
+					if (rs2.isBeforeFirst()) { 
+						HashMap<Timestamp, Double> temp = new HashMap<Timestamp, Double> ();
+						for (Timestamp t: timestamps) {
+							temp.put(t,  0.0);
+						}
+						while (rs2.next()) {
+							Timestamp t = rs2.getTimestamp(1);
+							double count = (double) rs2.getInt(3);
+							temp.put(t, count);
+						}
+						candData.put(candidate, temp);
+						rs2.close();
+						//candDataArray = targetData.values().toArray(candDataArray);
+						candDataArray = candData.get(candidate).values().stream().mapToDouble(i->i).toArray();
+						
+						double coeff = new PearsonsCorrelation().correlation(targetDataArray, candDataArray);
+						candCorrelation.put(candidate, coeff);
+					}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		} 
+		
+		candCorrelation = 
+			     candCorrelation.entrySet().stream()
+			    .sorted(Entry.comparingByValue(Comparator.reverseOrder()))
+			    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+			                              (e1, e2) -> e1, LinkedHashMap::new));
+		//System.out.println(candCorrelation.toString());
+	}
+	
 	public void computeCrossCorrelationNormalized (String target, String binnedData) {
 		this.target = target;
 		this.targetData = new HashMap<Timestamp, Double> ();
@@ -467,7 +546,7 @@ public class CrossCorrelation {
 			    .sorted(Entry.comparingByValue(Comparator.reverseOrder()))
 			    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
 			                              (e1, e2) -> e1, LinkedHashMap::new));
-		System.out.println(candCorrelation.toString());
+		//System.out.println(candCorrelation.toString());
 		
 	}
 	

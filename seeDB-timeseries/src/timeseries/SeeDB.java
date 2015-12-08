@@ -114,6 +114,10 @@ public class SeeDB {
 		cc.computeCrossCorrelationTimeWindow(target, startTime, endTime, bt.getBinnedDataName());
 			
 	}
+	public void computeCorrelationTimeWindow (String target, String[] candidates, Timestamp startTime, Timestamp endTime) {
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeCrossCorrelationTimeWindow(target, candidates, startTime, endTime, bt.getBinnedDataName());
+	}
 	
 	public void computeCorrelationDiffGranularity (String target, String[] candidates) {
 		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
@@ -138,5 +142,10 @@ public class SeeDB {
 	public String[] getAllHashtags() {
 		HashtagsMetadata hm = new HashtagsMetadata(connection, 0);
 		return hm.getAll();
+	}
+	
+	public double getTableSize(String s) {
+		Utils u = new Utils(connection);
+		return u.getTableSize(s);
 	}
 }

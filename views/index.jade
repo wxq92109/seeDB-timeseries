@@ -1,0 +1,107 @@
+extends layout
+
+block content
+    div.container
+        div.row.panel
+
+            div.col-md-4
+                div.well
+                
+                    div.row
+                        h5 Select a hashtag
+
+                        div.blue
+                            table.table
+                                tr
+                                tr
+                                    td
+                                    |<input type="text" name="user_hashtag" id="user_hashtag" value="Amsterdam,Washington" data-role="tagsinput" 
+                                
+                                tr.templateAttributeFilter
+                                    td
+                                        select.attributes.attribute(id="attribute1", style="width: 80px")
+                                            option Attribute1
+                                            option Attribute2
+                                    td
+                                        select.operator(id="operator1", style="width: 80px")
+                                            option(value="<=") <=
+                                            option(value="<") <
+                                            option(value="=") =
+                                            option(value="!=") !=
+                                            option(value=">=") >=
+                                            option(value=">") >
+                                    td
+                                        input.value(type="text", id="value1", maxlength="20", placeholder="value", size=4)
+                                        
+                                    td 
+                                        input.btn.removeFilter(data-idx=1, value="X", type="submit")
+                                
+                                tr.dummyRow1
+
+                    div.row
+                        table.table
+                            
+
+                    div.row
+                            br
+                            input.btn.addAttributeFilter(id="getRecommendations", type="submit", value="Get Recommendations", rec_type="all") 
+
+                
+            div.col-md-8
+                div.row.well
+                    h5 Time Window Selection
+
+                    form.form(method="post", id="manualPlot", action="/manualPlot")
+                        table.table
+                            tr
+                                h5 Start time
+
+                                |<div class="input-group bootstrap-timepicker timepicker">
+                                |    <input name="start_time" id="start_time" type="text" class="form-control input-small">
+                                |    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                |</div>
+
+                                h5 End time
+                                |<div class="input-group bootstrap-timepicker timepicker">
+                                |    <input name="end_time" id="end_time" type="text" class="form-control input-small">
+                                |    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                |</div>
+
+                            tr 
+                                td(colspan="1")
+                                input.btn(type="submit", value="Plot")
+
+                div.row
+                    div.col-md-11#big_viz
+                    div.col-md-1
+                        input.btn.bookmark(value="Bookmark", type="submit")
+                        br
+                        br
+                        //input.btn.normalize(value="Normalize", type="submit")
+
+        div.row
+            h5 SeeDB Recommendations
+            div.row#recs(data-num=0)
+                div.col-md-3.padded.template_rec
+                    div.rec_viz
+                    input.btn.zoom.zoom2(value="Zoom", type="submit") 
+                   
+
+        div.row#recs_div.hide2
+            div.row.slider1
+
+
+        hr
+        div.row.outline
+            h5 Bookmarks
+            div.row#bookmarks(data-num=0)
+                div.btn.col-md-3.padded.template_bookmark
+                    div.rec_viz
+                    input.btn.zoom(value="Zoom", type="submit") 
+                    span &nbsp; &nbsp;
+                    input.btn.delete(value="Delete", type="submit")
+        div.row
+            div.dummy3
+            hr
+            input.btn#getLog(value="Get Log", type="submit")
+                
