@@ -1,15 +1,19 @@
 package timeseries;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -19,15 +23,17 @@ import com.sun.net.httpserver.Headers;
 
 public class Server {
 
-  @SuppressWarnings("restriction")
-public static void main(String[] args) throws Exception {
-    @SuppressWarnings("restriction")
-	HttpServer server = HttpServer.create(new InetSocketAddress(8081), 0);
-    server.createContext("/getResult", new ResultHandler());
-    server.createContext("/get", new GetHandler());
-    server.setExecutor(null); // creates a default executor
-    server.start();
-  }
+	  @SuppressWarnings("restriction")
+	public static void main(String[] args) throws Exception {
+	    @SuppressWarnings("restriction")
+		HttpServer server = HttpServer.create(new InetSocketAddress(8081), 0);
+	    server.createContext("/getResult", new ResultHandler());
+	    server.createContext("/get", new GetHandler());
+	    server.setExecutor(null); // creates a default executor
+	    server.start();
+	  }
+	  
+
 
   static class ResultHandler implements HttpHandler {
     @SuppressWarnings("restriction")
@@ -52,8 +58,10 @@ public static void main(String[] args) throws Exception {
 		}
 		System.out.println(t.getResponseHeaders());
 	    Headers h = t.getResponseHeaders();
+	    // these are the user inputs
+	    Map <String,String>params = queryToMap(t.getRequestURI().getQuery());
+	    System.out.println(params);
 	    h.add("Content-Type", "application/json");
-		System.out.println("t.getRequestHeaders()" + t.getRequestHeaders());
 		Gson gson = new Gson(); 
 		String json = gson.toJson(results); 
 		System.out.println(json);
@@ -62,6 +70,21 @@ public static void main(String[] args) throws Exception {
 		os.write(json.getBytes());
 		os.close();
     }
+    
+    
+	  public static Map<String, String> queryToMap(String query){
+		    Map<String, String> result = new HashMap<String, String>();
+		    for (String param : query.split("&")) {
+		        String pair[] = param.split("=");
+		        if (pair.length>1) {
+		            result.put(pair[0], pair[1]);
+		        }else{
+		            result.put(pair[0], "");
+		        }
+		    }
+		    return result;
+		  }
+
   }
 
   static class GetHandler implements HttpHandler {
