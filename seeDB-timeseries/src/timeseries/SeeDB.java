@@ -96,10 +96,17 @@ public class SeeDB {
 	 */
 	public void computeCorrelation(String target, String[] candidates) {
 		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeCrossCorrelation(target, candidates, bt.getBinnedDataName());
 	}
 	
 	public void computeCorrelation(String target) {
 		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeCrossCorrelation(target, bt.getBinnedDataName());
+	}
+	
+	public void computeCorrelationNormalized(String target) {
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeCrossCorrelationNormalized(target, bt.getBinnedDataName());
 	}
 	
 	public void computeCorrelationTimeWindow (String target, Timestamp startTime, Timestamp endTime) {
@@ -108,7 +115,23 @@ public class SeeDB {
 			
 	}
 	
+	public void computeCorrelationDiffGranularity (String target, String[] candidates) {
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeCrossCorrelationDiffGranularity(target, candidates, bt.getBinnedDataName());
+			
+	}
+	
 	public HashMap<String, HashMap<Timestamp, Double>> getHighlyCorrelated(int n) {
 		return cc.getHighlyCorrelated(n);	
+	}
+	
+	public String[] getPopularHashtags() {
+		HashtagsMetadata hm = new HashtagsMetadata(connection, 5);
+		return hm.getPopular();
+	}
+	
+	public String[] getAllHashtags() {
+		HashtagsMetadata hm = new HashtagsMetadata(connection, 10);
+		return hm.getAll();
 	}
 }
