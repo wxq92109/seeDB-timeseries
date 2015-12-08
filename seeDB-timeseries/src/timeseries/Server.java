@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 
 public class Server {
@@ -29,7 +30,8 @@ public static void main(String[] args) throws Exception {
   }
 
   static class ResultHandler implements HttpHandler {
-    public void handle(HttpExchange t) throws IOException {
+    @SuppressWarnings("restriction")
+	public void handle(HttpExchange t) throws IOException {
     	// step 1: connect to db
     	
 		DBSetting s = DBSetting.getDefault();
@@ -48,11 +50,17 @@ public static void main(String[] args) throws Exception {
 		for (Entry<String, HashMap<Timestamp, Double>> result : results.entrySet()) {
 			response += result.getKey() + "=" + result.getValue();
 		}
-//      String response = "Use /get to download a PDF";
-      t.sendResponseHeaders(200, response.length());
-      OutputStream os = t.getResponseBody();
-      os.write(response.getBytes());
-      os.close();
+		System.out.println(t.getResponseHeaders());
+	    Headers h = t.getResponseHeaders();
+	    h.add("Content-Type", "application/json");
+		System.out.println("t.getRequestHeaders()" + t.getRequestHeaders());
+		Gson gson = new Gson(); 
+		String json = gson.toJson(results); 
+		System.out.println(json);
+		t.sendResponseHeaders(200, json.length());
+		OutputStream os = t.getResponseBody();
+		os.write(json.getBytes());
+		os.close();
     }
   }
 

@@ -13,27 +13,10 @@ block content
                         div.blue
                             table.table
                                 tr
-                                    td Attribute
-                                    td Operator
-                                    td Value
-                                    td
-
-
-                                td Hashtag
-                                td(colspan="1")
-                                    select.span2(id="y_aggregate")
-                                        option(value="AVG") AVG
-                                        option(value="COUNT") COUNT
-                                        option(value="SUM") SUM
-                                        option(value="NONE") NONE
                                 tr
                                     td
-                                    input(
-                                      type='text'
-                                      name='user_hashtags'
-                                      data-role='tagsinput',
-                                      value='Beijing, Washington'
-                                    )
+                                    |<input type="text" name="user_hashtag" id="user_hashtag" value="Amsterdam,Washington" data-role="tagsinput" 
+                                
                                 tr.templateAttributeFilter
                                     td
                                         select.attributes.attribute(id="attribute1", style="width: 80px")
@@ -54,56 +37,39 @@ block content
                                         input.btn.removeFilter(data-idx=1, value="X", type="submit")
                                 
                                 tr.dummyRow1
-                                
-                                tr
-                                    td(colspan="4")
-                                        input.btn.addAttributeFilter(data-idx=1, type="submit", value="Add Filter", style="background-color: #3366cc")
+
                     div.row
                         table.table
                             
-                    div.row
-                        input(
-                            type='text'
-                            name='user_hashtags'
-                            data-role='tagsinput',
-                            value='Beijing, Washington'
-                            )
-                            
+
                     div.row
                             br
-                            input.btn.addAttributeFilter(id="setQuery", type="submit", value="Get Recommendations", rec_type="all") 
+                            input.btn.addAttributeFilter(id="getRecommendations", type="submit", value="Get Recommendations", rec_type="all") 
 
                 
             div.col-md-8
                 div.row.well
-                    h5 Visualization Builder
+                    h5 Time Window Selection
 
-                    
                     form.form(method="post", id="manualPlot", action="/manualPlot")
                         table.table
                             tr
-                                td X axis
+                                h5 Start time
+
+                                |<div class="input-group bootstrap-timepicker timepicker">
+                                |    <input name="start_time" id="start_time" type="text" class="form-control input-small">
+                                |    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                |</div>
+
+                                h5 End time
+                                |<div class="input-group bootstrap-timepicker timepicker">
+                                |    <input name="end_time" id="end_time" type="text" class="form-control input-small">
+                                |    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                |</div>
+
+                            tr 
                                 td(colspan="1")
-                                    select.span2.attributes(id="x_axis", style="width: 80px")
-                                        option Attribute1
-                                        option Attribute2
-                            
-                                td Y axis
-                                td(colspan="1")
-                                    select.span2.attributes.measures(id="y_axis", style="width: 80px")
-                                        option Attribute1
-                                        option Attribute2
-                            
-                                td Y aggregate
-                                td(colspan="1")
-                                    select.span2(id="y_aggregate")
-                                        option(value="AVG") AVG
-                                        option(value="COUNT") COUNT
-                                        option(value="SUM") SUM
-                                        option(value="NONE") NONE
-                            
-                                td(colspan="1")
-                                    input.btn(type="submit", value="Plot")
+                                input.btn(type="submit", value="Plot")
 
                 div.row
                     div.col-md-11#big_viz
