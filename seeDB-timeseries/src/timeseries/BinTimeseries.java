@@ -56,8 +56,9 @@ public class BinTimeseries {
 					+ "date_trunc(\'min\', \"timestamp\") AS \"min\",\n"
 					+ "hashtag,\n" 
 					+ "count(hashtag) OVER (PARTITION BY hashtag, date_trunc(\'min\', \"timestamp\")) AS \"cnt\"\n"
-					+ "INTO hashtags_by_min\n"
-					+ "FROM hashtags;";
+					+ "INTO hashtags_by_min_window\n"
+					+ "FROM hashtags\n"
+					+ "WHERE timestamp >= \'" + startTime.toString() + "\' AND timestamp <= \'" + endTime.toString() + "\';";;
 					//+ "ORDER BY hashtag, min;";
 		}
 		
