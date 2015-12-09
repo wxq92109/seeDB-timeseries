@@ -9,7 +9,7 @@ public class BinningRules {
 	private final long THRESHOLD = 180;// 3 hours
 	// if predictBin is true, we will bin by hour if timewindow > 3 hours - 12:06 - 17:53 -> 12:00 - 18:00; minute otherwise
 	// otherwise, default to bin by minute
-	private boolean predictBin = false;
+	private boolean predictBin = true;
 	public BinningRules(Timestamp startTime2, Timestamp endTime2) {
 		this.startTime = startTime2;
 		this.endTime = endTime2;
