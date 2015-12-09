@@ -43,11 +43,9 @@ $(function(){
         $.post('/getRecommendations', params, function(ret) {
 
             var raw_data = $.parseJSON(ret);
-            console.log(raw_data);
 
             // not sure why, but we need to parse it twice before it becomes a JS object
             var raw_data = $.parseJSON(raw_data);
-            console.log(raw_data);
 
             var target_chart_data = [];
             // all of this is to get the biz viz to show up
@@ -131,7 +129,6 @@ $(function(){
 
             // for each one, need to make a chart, with that and the target
             _.each(rec_comparison_data, function(val, idx) {
-                console.log(val);
                 var chart_data = []
                 var data = new google.visualization.DataTable();
                 data.addColumn('datetime', 'Time');
@@ -175,7 +172,6 @@ $(function(){
                 });
                 // add the data 
                 data.addRows(chart_data);
-                console.log(chart_data);
 
                 var el = $(".template_rec").clone();
                 el.removeClass("template_rec");
@@ -185,7 +181,6 @@ $(function(){
 
                 $("#recs").data("num", b);
                 var rec_id = "rec_" + b;
-                console.log(el, b, rec_id);
                 
                 el.find(".rec_viz").last().attr("id", rec_id);
                 el.data('image_options', options);
