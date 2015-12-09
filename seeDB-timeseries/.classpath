@@ -2,17 +2,18 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/guava-15.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/jackson-annotations-2.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/jackson-core-2.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/jackson-databind-2.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/junit-4.11.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/postgresql-9.2-1000.jdbc4.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/py4j0.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/deborahc/Documents/school/Fall_2015/6.830/project/seeDB-timeseries/seeDB-timeseries/lib/vertica-jdbc-7.0.2-1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-math3-3.5-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-math3-3.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/guava-15.0.jar"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/jackson-annotations-2.3.0.jar"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/jackson-core-2.3.0.jar"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/jackson-databind-2.3.0.jar"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/postgresql-9.2-1000.jdbc4.jar"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/py4j0.8.jar"/>
-	<classpathentry kind="lib" path="/Users/yenahan/Documents/MIT/fa15/6.830/project/seedb-master/SeeDB-java-backend/lib/vertica-jdbc-7.0.2-1.jar"/>
-	<classpathentry kind="lib" path="lib/commons-math3-3.5-javadoc.jar"/>
-	<classpathentry kind="lib" path="lib/commons-math3-3.5.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
