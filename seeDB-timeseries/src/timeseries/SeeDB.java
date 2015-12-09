@@ -80,12 +80,12 @@ public class SeeDB {
 	 * @param toBin table to do binning
 	 * @param saveas table name of the binned data 
 	 */
-	public void binTimeData(String toBin, String saveas) {
-		bt = new BinTimeseries(connection, toBin, saveas);
+	public void binTimeData(String toBin, String saveas, boolean isHour) {
+		bt = new BinTimeseries(connection, toBin, saveas, isHour);
 	}
 	
-	public void binTimeData(String toBin, String saveas, Timestamp startTime, Timestamp endTime) {
-		bt = new BinTimeseries(connection, toBin, saveas, startTime, endTime);
+	public void binTimeData(String toBin, String saveas, Timestamp startTime, Timestamp endTime, boolean isHour) {
+		bt = new BinTimeseries(connection, toBin, saveas, startTime, endTime, isHour);
 	}
 	
 	/**
@@ -114,6 +114,10 @@ public class SeeDB {
 		cc.computeCrossCorrelationTimeWindow(target, startTime, endTime, bt.getBinnedDataName());
 			
 	}
+	public void computeCorrelationTimeWindow (String target, String[] candidates, Timestamp startTime, Timestamp endTime) {
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeCrossCorrelationTimeWindow(target, candidates, startTime, endTime, bt.getBinnedDataName());
+	}
 	
 	public void computeCorrelationDiffGranularity (String target, String[] candidates) {
 		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
@@ -121,17 +125,27 @@ public class SeeDB {
 			
 	}
 	
+	public void computeEuclideanDistance (String target, String[] candidates) {
+		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
+		cc.computeEuclideanDistance(target, candidates, bt.getBinnedDataName());
+	}
+	
 	public HashMap<String, HashMap<Timestamp, Double>> getHighlyCorrelated(int n) {
 		return cc.getHighlyCorrelated(n);	
 	}
 	
-	public String[] getPopularHashtags() {
-		HashtagsMetadata hm = new HashtagsMetadata(connection, 5);
+	public String[] getPopularHashtags(int n) {
+		HashtagsMetadata hm = new HashtagsMetadata(connection, n);
 		return hm.getPopular();
 	}
 	
 	public String[] getAllHashtags() {
-		HashtagsMetadata hm = new HashtagsMetadata(connection, 10);
+		HashtagsMetadata hm = new HashtagsMetadata(connection, 0);
 		return hm.getAll();
+	}
+	
+	public double getTableSize(String s) {
+		Utils u = new Utils(connection);
+		return u.getTableSize(s);
 	}
 }
