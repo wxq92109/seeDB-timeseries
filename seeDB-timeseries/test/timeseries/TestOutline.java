@@ -16,8 +16,8 @@ public class TestOutline {
 		
 		long timeBefore = System.currentTimeMillis();
 		
-		//seedb.binTimeData("hashtags", "hashtags_by_hour");
-		seedb.binTimeData("hashtags", "hashtags_by_hour_window", Timestamp.valueOf("2015-02-24 00:00:00.0"), Timestamp.valueOf("2015-02-24 23:00:00.0"));
+		seedb.binTimeData("hashtags", "hashtags_by_hour", true);
+		//seedb.binTimeData("hashtags", "hashtags_by_hour_window", Timestamp.valueOf("2015-02-24 00:00:00.0"), Timestamp.valueOf("2015-02-24 23:00:00.0"));
 		System.out.println("binned data");
 		
 		String target = "job";//"engineering";//"happy"; //votelittlemixuk (kca) //voteonedirection //vote5sos (mtv 5 seconds of summer)
@@ -28,9 +28,9 @@ public class TestOutline {
 		//seedb.computeCorrelation(target, candidates);
 		//seedb.computeCorrelation(target);
 		//seedb.computeCorrelationTimeWindow (target, Timestamp.valueOf("2015-02-24 08:00:00.0"), Timestamp.valueOf("2015-02-24 23:00:00.0")) ;
-		seedb.computeCorrelationTimeWindow(target, candidates, Timestamp.valueOf("2015-02-24 00:00:00.0"), Timestamp.valueOf("2015-02-24 23:00:00.0"));
+		//seedb.computeCorrelationTimeWindow(target, candidates, Timestamp.valueOf("2015-02-24 00:00:00.0"), Timestamp.valueOf("2015-02-24 23:00:00.0"));
 		//seedb.computeCorrelationNormalized(target);
-		//seedb.computeCorrelationDiffGranularity(target, candidates);
+		seedb.computeCorrelationDiffGranularity(target, candidates);
 		//seedb.computeEuclideanDistance(target, candidates);
 		System.out.println("computed cross correlation");
 		

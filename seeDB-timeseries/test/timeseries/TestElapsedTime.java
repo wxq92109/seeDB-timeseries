@@ -15,7 +15,7 @@ public class TestElapsedTime {
 		
 		long timeBefore = System.currentTimeMillis();
 		
-		seedb.binTimeData("hashtags", "hashtags_by_hour");
+		seedb.binTimeData("hashtags", "hashtags_by_hour", true);
 		//seedb.binTimeData("hashtags", "hashtags_by_hour", Timestamp.valueOf("2015-02-24 08:00:00.0"), Timestamp.valueOf("2015-02-24 23:00:00.0"));
 		
 		String target = "job"; //votelittlemixuk (kca) //voteonedirection //vote5sos (mtv 5 seconds of summer)

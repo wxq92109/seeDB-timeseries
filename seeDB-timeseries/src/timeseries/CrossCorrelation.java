@@ -450,7 +450,7 @@ public class CrossCorrelation {
 			    .sorted(Entry.comparingByValue(Comparator.reverseOrder()))
 			    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
 			                              (e1, e2) -> e1, LinkedHashMap::new));
-		System.out.println(candCorrelation.toString());
+		//System.out.println(candCorrelation.toString());
 		
 	}
 	

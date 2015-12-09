@@ -38,7 +38,7 @@ public class TestTimewindow {
 				
 				long timeBefore = System.currentTimeMillis();
 				
-				seedb.binTimeData("hashtags", "hashtags_by_hour_window", Timestamp.valueOf("2015-02-24 " + startTime + ":00:00.0"), Timestamp.valueOf("2015-02-24 " + endTime + ":00:00.0"));
+				seedb.binTimeData("hashtags", "hashtags_by_hour_window", Timestamp.valueOf("2015-02-24 " + startTime + ":00:00.0"), Timestamp.valueOf("2015-02-24 " + endTime + ":00:00.0"), true);
 				seedb.computeCorrelationTimeWindow (target, candidates, Timestamp.valueOf("2015-02-24 " + startTime + ":00:00.0"), Timestamp.valueOf("2015-02-24 " + endTime + ":00:00.0"));
 				
 				long timeAfter = System.currentTimeMillis();

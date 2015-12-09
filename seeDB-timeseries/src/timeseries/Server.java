@@ -45,7 +45,7 @@ public class Server {
 		SeeDB seedb = new SeeDB();
 		seedb.connectToDatabase(s.database, s.databaseType, s.username, s.password);
 		System.out.println("connected to db");
-		seedb.binTimeData("hashtags", "hashtags_by_hour", Timestamp.valueOf("2015-02-24 00:00:00.0"), Timestamp.valueOf("2015-02-24 05:00:00.0"));
+		seedb.binTimeData("hashtags", "hashtags_by_hour", Timestamp.valueOf("2015-02-24 00:00:00.0"), Timestamp.valueOf("2015-02-24 05:00:00.0"), true);
 		String target = "job";
 		String[] candidates = {"jobs", "kca", "tweetmyjobs", "vote1duk"};
 		seedb.computeCorrelation(target, candidates);

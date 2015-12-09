@@ -80,12 +80,12 @@ public class SeeDB {
 	 * @param toBin table to do binning
 	 * @param saveas table name of the binned data 
 	 */
-	public void binTimeData(String toBin, String saveas) {
-		bt = new BinTimeseries(connection, toBin, saveas);
+	public void binTimeData(String toBin, String saveas, boolean isHour) {
+		bt = new BinTimeseries(connection, toBin, saveas, isHour);
 	}
 	
-	public void binTimeData(String toBin, String saveas, Timestamp startTime, Timestamp endTime) {
-		bt = new BinTimeseries(connection, toBin, saveas, startTime, endTime);
+	public void binTimeData(String toBin, String saveas, Timestamp startTime, Timestamp endTime, boolean isHour) {
+		bt = new BinTimeseries(connection, toBin, saveas, startTime, endTime, isHour);
 	}
 	
 	/**

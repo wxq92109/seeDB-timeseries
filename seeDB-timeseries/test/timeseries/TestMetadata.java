@@ -13,7 +13,7 @@ public class TestMetadata {
 		SeeDB seedb = new SeeDB();
 		seedb.connectToDatabase(s.database, s.databaseType, s.username, s.password);
 		
-		seedb.binTimeData("hashtags", "hashtags_by_hour");
+		seedb.binTimeData("hashtags", "hashtags_by_hour", true);
 		System.out.println("binned data");
 		
 		String target = "job";
