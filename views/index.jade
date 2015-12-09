@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1.title Timeseries SeeDB
-    h3.title A recommendation system for time series visualizations
+    h3.subtitle A recommendation system for time series visualizations
 
     |<br></br>
     div.container
@@ -11,44 +11,27 @@ block content
             div.col-md-4
                 div.well
                 
-                    div.row
+                    div
                         h3 Select a hashtag
                         |<br></br>
 
                         div
                             table.table
                                 tr
+                                    td
+                                    |<input type="text" name="user_hashtag" id="user_hashtag" value="veteranjob" data-role="tagsinput" 
                                 tr
-                                    td
-                                    |<input type="text" name="user_hashtag" id="user_hashtag" value="Amsterdam,Washington" data-role="tagsinput" 
                                 
-                                tr.templateAttributeFilter
-                                    td
-                                        select.attributes.attribute(id="attribute1", style="width: 80px")
-                                            option Attribute1
-                                            option Attribute2
-                                    td
-                                        select.operator(id="operator1", style="width: 80px")
-                                            option(value="<=") <=
-                                            option(value="<") <
-                                            option(value="=") =
-                                            option(value="!=") !=
-                                            option(value=">=") >=
-                                            option(value=">") >
-                                    td
-                                        input.value(type="text", id="value1", maxlength="20", placeholder="value", size=4)
-                                        
-                                    td 
-                                        input.btn.removeFilter(data-idx=1, value="X", type="submit")
 
 
-                    div.row
+                    div
                             input.btn.addAttributeFilter(id="getRecommendations", type="submit", value="Get Recommendations", rec_type="all") 
 
-                
+                    |<br></br>
+
             div.col-md-8
                 div.row.well
-                    h3 Select a Time Window
+                    h3 Select a Time Window (Date: Feb. 24, 2015)
                     div.row
                     form.form(method="post", id="manualPlot", action="/manualPlot")
                         table.table
@@ -67,7 +50,9 @@ block content
                                 |</div>
 
             |<br></br>
-            h3.title SeeDB Recommendations
+            div.col-md-12
+
+                h3.subtitle SeeDB Recommendations
             div.col-md-12
 
                     div.col-md-12#big_viz

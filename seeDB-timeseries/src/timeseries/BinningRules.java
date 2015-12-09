@@ -26,12 +26,12 @@ public class BinningRules {
 				return "minute";
 			}
 		}
-
-		
+		// determine length of time window
 	    long ms1 = startTime.getTime();
 	    long ms2 = endTime.getTime();
 	    long diff = ms2 - ms1;
 	    long diffMinutes = diff / (60 * 1000);
+	    
 	    if (diffMinutes < THRESHOLD ) {
 	    	return "minute";
 	    } else {

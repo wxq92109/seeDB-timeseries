@@ -9,7 +9,14 @@ a {
 
 .title {
 	text-align: center;
+	color:#257a91
 }
+
+.subtitle {
+	text-align: center;
+
+}
+
 
 .outline-right {
 	padding-right: 20px;
@@ -87,4 +94,8 @@ a {
 	border-radius: 5px;
     border: 2px solid #dc3912;
     padding: 20px; 
+}
+
+.bootstrap-tagsinput {
+	width: 100%;
 }

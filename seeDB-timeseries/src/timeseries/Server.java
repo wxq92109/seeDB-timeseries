@@ -77,7 +77,7 @@ public class Server {
 			seedb.connectToDatabase(s.database, s.databaseType, s.username, s.password);
 			System.out.println("connected to db");
 			// convert user input to Timestamps
-			
+			String userHashtag = params.get("user_hashtag");
 			String userStartTime = params.get("start_time");
 			String userEndTime = params.get("end_time");
 			Utils u = new Utils();
@@ -103,7 +103,10 @@ public class Server {
 				seedb.binTimeData("hashtags", "hashtags_by_min_window", startTime, endTime, bool);
 			}
 
-			String target = "retail";
+//			String target = "retail";
+			System.out.println(params);
+			String target = userHashtag;
+
 //			String[] candidates = { "jobs", "kca", "tweetmyjobs", "vote1duk" };
 			String[] candidates = seedb.getPopularHashtags(10);
 
