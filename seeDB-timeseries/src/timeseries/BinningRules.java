@@ -19,8 +19,15 @@ public class BinningRules {
 	public String determineBinGranularity() {
 		
 		if (!predictBin) {
-			return "minute";
+			// if it's clean hour to hour, bin by hour
+			if (startTime.getMinutes() == 0 && endTime.getMinutes() == 0) {
+				return "hour";
+			} else {
+				return "minute";
+			}
 		}
+
+		
 	    long ms1 = startTime.getTime();
 	    long ms2 = endTime.getTime();
 	    long diff = ms2 - ms1;
