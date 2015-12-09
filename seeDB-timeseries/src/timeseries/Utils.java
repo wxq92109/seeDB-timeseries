@@ -38,8 +38,8 @@ public class Utils {
 	public Timestamp convertUserTime(String startTime) {
 		System.out.println(startTime);
 		String todaysDate = "2015-02-24";
-		DateFormat readFormat = new SimpleDateFormat("HH:mm aa");
-		DateFormat writeFormat = new SimpleDateFormat("HH:mm:ss.SSS");
+		DateFormat readFormat = new SimpleDateFormat("hh:mm aa");
+		DateFormat writeFormat = new SimpleDateFormat("HH:mm:ss.S");
 		Date time = null;
 		String result = "";
 	    try {
@@ -51,9 +51,7 @@ public class Utils {
 	    if( time != null ) {
 	        String formattedTime = writeFormat.format(time);
 		    result = todaysDate + " " + formattedTime;
-		    System.out.println(result);
 	    }
-//		return Timestamp.valueOf("2015-02-24 00:00:00.0");
 
 		return Timestamp.valueOf(result);
 		

@@ -1,13 +1,5 @@
 $(function(){
 
-    var big_width = 700;
-    var big_height = 300;
-
-    var small_width = 250;
-    var small_height = 200;
-
-
-
     var hashtags = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -51,9 +43,11 @@ $(function(){
         $.post('/getRecommendations', params, function(ret) {
 
             var raw_data = $.parseJSON(ret);
+            console.log(raw_data);
+
             // not sure why, but we need to parse it twice before it becomes a JS object
             var raw_data = $.parseJSON(raw_data);
-
+            console.log(raw_data);
 
             var target_chart_data = [];
             // all of this is to get the biz viz to show up

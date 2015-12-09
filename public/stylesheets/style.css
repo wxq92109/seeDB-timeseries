@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 
+.title {
+	text-align: center;
+}
+
 .outline-right {
 	padding-right: 20px;
   	/*border-right: 1px solid #ddd;*/
@@ -21,7 +25,9 @@ a {
 
 #big_viz {
 	height: 300px;
-	width: 700px;
+	width: 968px;
+	margin: 0 auto;
+	display: inline-block;
 }
 
 .rec_viz {
@@ -68,7 +74,7 @@ a {
 }
 
 .zoom2 {
-	margin-left: 90px;
+	margin-left: 50px;
 }
 
 .blue {

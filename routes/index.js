@@ -17,7 +17,7 @@ router.post('/getRecommendations', function(req, res) {
     console.log(req.body);
 
     request({
-        url: 'http://localhost:8081/getResult', //URL to hit
+        url: 'http://localhost:8082/getResult', //URL to hit
         qs: req.body, //Query string data
         method: 'GET', //Specify the method
         // headers: { //We can define headers too

@@ -1,6 +1,10 @@
 extends layout
 
 block content
+    h1.title Timeseries SeeDB
+    h3.title A recommendation system for time series visualizations
+
+    |<br></br>
     div.container
         div.row.panel
 
@@ -8,9 +12,10 @@ block content
                 div.well
                 
                     div.row
-                        h5 Select a hashtag
+                        h3 Select a hashtag
+                        |<br></br>
 
-                        div.blue
+                        div
                             table.table
                                 tr
                                 tr
@@ -35,48 +40,40 @@ block content
                                         
                                     td 
                                         input.btn.removeFilter(data-idx=1, value="X", type="submit")
-                                
-                                tr.dummyRow1
+
 
                     div.row
-                        table.table
-                            
-
-                    div.row
-                            br
                             input.btn.addAttributeFilter(id="getRecommendations", type="submit", value="Get Recommendations", rec_type="all") 
 
                 
             div.col-md-8
                 div.row.well
-                    h5 Time Window Selection
-
+                    h3 Select a Time Window
+                    div.row
                     form.form(method="post", id="manualPlot", action="/manualPlot")
                         table.table
                             tr
                                 h5 Start time
 
                                 |<div class="input-group bootstrap-timepicker timepicker">
-                                |    <input name="start_time" id="start_time" type="text" class="form-control input-small">
+                                |    <input name="start_time" value = "9:00 AM" id="start_time" type="text" class="form-control input-small">
                                 |    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 |</div>
 
                                 h5 End time
                                 |<div class="input-group bootstrap-timepicker timepicker">
-                                |    <input name="end_time" id="end_time" type="text" class="form-control input-small">
+                                |    <input name="end_time" value = "5:00 PM" id="end_time" type="text" class="form-control input-small">
                                 |    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 |</div>
 
-                            tr 
-                                td(colspan="1")
+            |<br></br>
+            h3.title SeeDB Recommendations
+            div.col-md-12
 
-                div.row
-                    div.col-md-11#big_viz
-                    div.col-md-1
-
+                    div.col-md-12#big_viz
 
         div.row
-            h5 SeeDB Recommendations
+        div.row
             div.row#recs(data-num=0)
                 div.col-md-3.padded.template_rec
                     div.rec_viz
