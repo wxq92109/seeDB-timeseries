@@ -6,6 +6,8 @@ $(function(){
     var small_width = 250;
     var small_height = 200;
 
+
+
     var hashtags = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -112,15 +114,18 @@ $(function(){
             data.addColumn('number', "#" + comparisons[0]);
             data.addRows(sorted_final_chart_data);
             var options = {
+                title: "#" + target + " vs. " + "#" + comparisons[0],
+
                 hAxis: {
                 title: 'February 24, 2015'
                 },  
                 vAxis: {
                     title: 'Number of hashtags'
                 },
-                colors: ['#a52714', '#097138']
-
+                colors: ['#097138', '#FFA500']
             };
+
+
             var chart = new google.visualization.LineChart(document.getElementById('big_viz'));
             chart.draw(data, options);
             //////Start of individual recommendations
@@ -148,7 +153,7 @@ $(function(){
                     vAxis: {
                         title: 'Number of hashtags'
                     },
-                    colors: ['#a52714', '#097138']
+                    colors: ['#097138', '#FFA500']
 
                 };
 
@@ -183,6 +188,7 @@ $(function(){
                 el.addClass("real_rec");
                 
                 var b = ($("#recs").data("num") + 1);
+
                 $("#recs").data("num", b);
                 var rec_id = "rec_" + b;
                 console.log(el, b, rec_id);

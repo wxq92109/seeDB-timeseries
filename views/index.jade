@@ -69,21 +69,18 @@ block content
 
                             tr 
                                 td(colspan="1")
-                                input.btn(type="submit", value="Plot")
 
                 div.row
                     div.col-md-11#big_viz
                     div.col-md-1
-                        input.btn.bookmark(value="Bookmark", type="submit")
-                        br
-                        br
-                        //input.btn.normalize(value="Normalize", type="submit")
+
 
         div.row
             h5 SeeDB Recommendations
             div.row#recs(data-num=0)
                 div.col-md-3.padded.template_rec
                     div.rec_viz
+                    | <br></br>
                     input.btn.zoom.zoom2(value="Zoom", type="submit") 
                    
 
@@ -94,15 +91,9 @@ block content
 
         hr
         div.row.outline
-            h5 Bookmarks
             div.row#bookmarks(data-num=0)
                 div.btn.col-md-3.padded.template_bookmark
                     div.rec_viz
                     input.btn.zoom(value="Zoom", type="submit") 
                     span &nbsp; &nbsp;
                     input.btn.delete(value="Delete", type="submit")
-        div.row
-            div.dummy3
-            hr
-            input.btn#getLog(value="Get Log", type="submit")
-                
