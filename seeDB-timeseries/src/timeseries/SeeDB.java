@@ -114,9 +114,9 @@ public class SeeDB {
 		cc.computeCrossCorrelationTimeWindow(target, startTime, endTime, bt.getBinnedDataName());
 			
 	}
-	public void computeCorrelationTimeWindow (String target, String[] candidates, Timestamp startTime, Timestamp endTime) {
+	public void computeCorrelationTimeWindow (String target, String[] candidates, Timestamp startTime, Timestamp endTime, boolean isHour) {
 		cc = new CrossCorrelation(connection, target, bt.getBinnedDataName());
-		cc.computeCrossCorrelationTimeWindow(target, candidates, startTime, endTime, bt.getBinnedDataName());
+		cc.computeCrossCorrelationTimeWindow(target, candidates, startTime, endTime, bt.getBinnedDataName(), isHour);
 	}
 	
 	public void computeCorrelationDiffGranularity (String target, String[] candidates) {

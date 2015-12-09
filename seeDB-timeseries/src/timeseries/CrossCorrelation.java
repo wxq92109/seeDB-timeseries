@@ -135,7 +135,7 @@ public class CrossCorrelation {
 		//System.out.println(candCorrelation.toString());
 	}
 	
-	public void computeCrossCorrelationTimeWindow (String target, String[] candidates, Timestamp startTime, Timestamp endTime, String binnedData) {
+	public void computeCrossCorrelationTimeWindow (String target, String[] candidates, Timestamp startTime, Timestamp endTime, String binnedData, boolean isHour) {
 		this.target = target;
 		this.targetData = new HashMap<Timestamp, Double> ();
 		this.candData = new HashMap<String, HashMap<Timestamp, Double>> ();
@@ -143,8 +143,14 @@ public class CrossCorrelation {
 		
 		ArrayList<Timestamp> timestamps = new ArrayList<Timestamp> ();
 		
-		String query = "SELECT * FROM generate_series(\'" + startTime.toString() + "\'::timestamp, \'" + endTime.toString() 
+		String query = "";
+		if (isHour) {
+			query = "SELECT * FROM generate_series(\'" + startTime.toString() + "\'::timestamp, \'" + endTime.toString() 
 				+ "\', \'1 hour\');";
+		} else {
+			query = "SELECT * FROM generate_series(\'" + startTime.toString() + "\'::timestamp, \'" + endTime.toString() 
+			+ "\', \'1 min\');";
+		}
 		ResultSet rs = conn.executeQuery(query);
 		try {
 			while (rs.next()) {
@@ -461,7 +467,7 @@ public class CrossCorrelation {
 		this.candData = new HashMap<String, HashMap<Timestamp, Double>> ();
 		this.candCorrelation = new LinkedHashMap<String, Double> ();
 		
-		/*for (int i = 0; i < 24; i ++) {
+		for (int i = 0; i < 24; i ++) {
 			for (int j = 0; j < 60; j++) {
 				String hour = "" + i;
 				if (i < 10) hour = "0" + hour;
@@ -469,15 +475,16 @@ public class CrossCorrelation {
 				if (j < 10) min = "0" + min;
 				this.targetData.put(Timestamp.valueOf("2015-02-24 " + hour + ":" + min + ":00.0"), 0.0);
 			}
-		}*/
+		}
 		
+		/*
 		//binned by hour
 		for (int i = 0; i < 24; i ++) {
 			//for (int i = 8; i < 24; i ++) {
 				String hour = "" + i;
 				if (i < 10) hour = "0" + hour;
 				this.targetData.put(Timestamp.valueOf("2015-02-24 " + hour + ":00:00.0"), 0.0);
-		}
+		}*/
 	
 		
 		String query = "SELECT * FROM " + binnedData + " WHERE hashtag = \'" + target + "\';";
@@ -503,7 +510,7 @@ public class CrossCorrelation {
 			rs = conn.executeQuery(query2);
 			HashMap<Timestamp, Double> temp = new HashMap<Timestamp, Double> ();
 			
-			/*for (int i = 0; i < 24; i ++) {
+			for (int i = 0; i < 24; i ++) {
 				for (int j = 0; j < 60; j++) {
 					String hour = "" + i;
 					if (i < 10) hour = "0" + hour;
@@ -511,15 +518,16 @@ public class CrossCorrelation {
 					if (j < 10) min = "0" + min;
 					temp.put(Timestamp.valueOf("2015-02-24 " + hour + ":" + min + ":00.0"), 0.0);
 				}
-			}*/
+			}
 			
+			/*
 			// binned by hour
 			for (int i = 0; i < 24; i ++) {
 				//for (int i = 8; i < 24; i ++) {
 					String hour = "" + i;
 					if (i < 10) hour = "0" + hour;
 					temp.put(Timestamp.valueOf("2015-02-24 " + hour + ":00:00.0"), 0.0);
-			}
+			}*/
 			try {
 				while (rs.next()) {
 					Timestamp t = rs.getTimestamp(1);

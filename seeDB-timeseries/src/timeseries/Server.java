@@ -75,11 +75,15 @@ public class Server {
 			seedb.connectToDatabase(s.database, s.databaseType, s.username, s.password);
 			System.out.println("connected to db");
 			
-			seedb.binTimeData("hashtags", "hashtags_by_hour", Timestamp.valueOf("2015-02-24 00:00:00.0"),
-			Timestamp.valueOf("2015-02-24 05:00:00.0"));
+			seedb.binTimeData("hashtags", "hashtags_by_min_window", Timestamp.valueOf("2015-02-24 00:00:00.0"),
+			Timestamp.valueOf("2015-02-24 05:00:00.0"), false);
+			//seedb.binTimeData("hashtags", "hashtags_by_hour", true);
+			//seedb.binTimeData("hashtags", "hashtags_by_min", false);
 			String target = "job";
-			String[] candidates = { "jobs", "kca", "tweetmyjobs", "vote1duk" };
-			seedb.computeCorrelation(target, candidates);
+			//String[] candidates = { "jobs", "kca", "tweetmyjobs", "vote1duk" };
+			String[] candidates = seedb.getPopularHashtags(10);
+			seedb.computeCorrelationTimeWindow(target, candidates, Timestamp.valueOf("2015-02-24 00:00:00.0"),
+					Timestamp.valueOf("2015-02-24 05:00:00.0"), false);
 			LinkedHashMap<String, HashMap<Timestamp, Double>> results = (LinkedHashMap<String, HashMap<Timestamp, Double>>) seedb
 					.getHighlyCorrelated(5);
 //			results.forEach((k, v) -> System.out.println(k + "=" + v));
