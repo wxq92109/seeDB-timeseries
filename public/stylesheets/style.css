@@ -14,7 +14,6 @@ a {
 
 .subtitle {
 	text-align: center;
-
 }
 
 
@@ -98,4 +97,7 @@ a {
 
 .bootstrap-tagsinput {
 	width: 100%;
+}
+.footer {
+	text-align: center;
 }
