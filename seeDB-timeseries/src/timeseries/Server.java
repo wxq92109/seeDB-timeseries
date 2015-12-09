@@ -74,16 +74,38 @@ public class Server {
 			SeeDB seedb = new SeeDB();
 			seedb.connectToDatabase(s.database, s.databaseType, s.username, s.password);
 			System.out.println("connected to db");
+			// convert user input to Timestamps
 			
-			seedb.binTimeData("hashtags", "hashtags_by_hour", Timestamp.valueOf("2015-02-24 00:00:00.0"),
-			Timestamp.valueOf("2015-02-24 05:00:00.0"));
+			String userStartTime = params.get("start_time");
+			String userEndTime = params.get("end_time");
+			Utils u = new Utils();
+			Timestamp startTime = u.convertUserTime(userStartTime);
+			Timestamp endTime = u.convertUserTime(userEndTime);
+
+			BinningRules binRules = new BinningRules(startTime, endTime);
+			String ruling = binRules.determineBinGranularity();
+//			// first figure out how you should bin the data
+//			// and then call computeCorrelation with the start and end time, with the right binned data
+			ruling = "hour";
+			if (ruling == "hour") {
+				seedb.binTimeData("hashtags", "hashtags_by_hour_window", true);
+			} else if (ruling == "min") {
+				seedb.binTimeData("hashtags", "hashtags_by_min_window", false);
+			}
+			
 			String target = "job";
-			String[] candidates = { "jobs", "kca", "tweetmyjobs", "vote1duk" };
-			seedb.computeCorrelation(target, candidates);
+//			String[] candidates = { "jobs", "kca", "tweetmyjobs", "vote1duk" };
+			String[] candidates = seedb.getPopularHashtags(10);
+
+			// need to convert the start_time to a timestamp...
+			// and automatically set the date
+			System.out.println("Startig to compute correlation window");
+			seedb.computeCorrelationTimeWindow(target, candidates, startTime, endTime);
+			System.out.println("Finished compute correlation window");
 			LinkedHashMap<String, HashMap<Timestamp, Double>> results = (LinkedHashMap<String, HashMap<Timestamp, Double>>) seedb
 					.getHighlyCorrelated(5);
 //			results.forEach((k, v) -> System.out.println(k + "=" + v));
-
+			System.out.println("results" + results);
 			return results;
 		}
 
