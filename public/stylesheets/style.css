@@ -101,3 +101,7 @@ a {
 .footer {
 	text-align: center;
 }
+
+.top-panel {
+	height:250px;
+}
